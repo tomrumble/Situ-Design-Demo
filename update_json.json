@@ -1,0 +1,50 @@
+{
+  "editsArray": [
+      {
+          "key": "element-demo-color-block-primary",
+          "type": "element",
+          "elementId": "demo-color-block-primary",
+          "original": {
+              "states": {
+                  "default": {
+                      "fill": [
+                          {
+                              "mode": "solid",
+                              "hex": "#EF9108",
+                              "opacity": 1,
+                              "layer": 1
+                          }
+                      ]
+                  }
+              }
+          },
+          "updated": {
+              "states": {
+                  "hover": {
+                      "fill": [
+                          {
+                              "mode": "solid",
+                              "hex": "#8a5cf6",
+                              "opacity": 1,
+                              "layer": 1
+                          }
+                      ]
+                  }
+              }
+          },
+          "timestamp": 1760130180974,
+          "changes": {
+              "states": {
+                  "hover": {
+                      "fill": [
+                          {
+                              "hex": "#8a5cf6"
+                          }
+                      ]
+                  }
+              }
+          }
+      }
+  ]
+}
+

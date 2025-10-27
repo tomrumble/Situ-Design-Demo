@@ -1,0 +1,646 @@
+name: Situ Design Plugin Automated Testing
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run tests daily at 2 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+    inputs:
+      test_suite:
+        description: 'Test suite to run'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+        - all
+        - unit
+        - integration
+        - performance
+        - stress
+        - compatibility
+        - visual
+
+env:
+  NODE_VERSION: '18'
+  TEST_TIMEOUT: 300000
+
+jobs:
+  # Unit and Integration Tests
+  unit-integration-tests:
+    name: Unit & Integration Tests
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'unit' || github.event.inputs.test_suite == 'integration' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        npm ci
+        cd situ-design-extension && npm ci
+        
+    - name: Build plugin
+      run: |
+        cd situ-design-extension
+        npm run build
+        
+    - name: Setup test environment
+      run: |
+        mkdir -p test-results
+        mkdir -p test-baselines
+        
+    - name: Run unit tests
+      run: |
+        node -e "
+        const puppeteer = require('puppeteer');
+        const fs = require('fs');
+        
+        async function runTests() {
+          const browser = await puppeteer.launch({ headless: true });
+          const page = await browser.newPage();
+          
+          // Load the test page
+          await page.goto('file://' + process.cwd() + '/index.html');
+          
+          // Inject the plugin and test framework
+          await page.addScriptTag({ path: './plugins/situ-design/index.js' });
+          await page.addScriptTag({ path: './automated-testing-framework.js' });
+          
+          // Run tests
+          const results = await page.evaluate(async () => {
+            const tester = new SituDesignTester();
+            await tester.runFillTests();
+            await tester.runBorderTests();
+            await tester.runLayoutTests();
+            await tester.runStateTests();
+            return tester.generateComprehensiveReport();
+          });
+          
+          // Save results
+          fs.writeFileSync('./test-results/unit-test-results.json', JSON.stringify(results, null, 2));
+          
+          await browser.close();
+          return results.summary.successRate >= 90;
+        }
+        
+        runTests().then(success => {
+          if (!success) {
+            console.error('Unit tests failed');
+            process.exit(1);
+          }
+          console.log('Unit tests passed');
+        });
+        "
+        
+    - name: Run integration tests
+      run: |
+        node -e "
+        const puppeteer = require('puppeteer');
+        const fs = require('fs');
+        
+        async function runIntegrationTests() {
+          const browser = await puppeteer.launch({ headless: true });
+          const page = await browser.newPage();
+          
+          await page.goto('file://' + process.cwd() + '/index.html');
+          await page.addScriptTag({ path: './plugins/situ-design/index.js' });
+          await page.addScriptTag({ path: './automated-testing-framework.js' });
+          
+          const results = await page.evaluate(async () => {
+            const tester = new SituDesignTester();
+            await tester.runPermutationTests();
+            return tester.generateComprehensiveReport();
+          });
+          
+          fs.writeFileSync('./test-results/integration-test-results.json', JSON.stringify(results, null, 2));
+          
+          await browser.close();
+          return results.summary.successRate >= 85;
+        }
+        
+        runIntegrationTests().then(success => {
+          if (!success) {
+            console.error('Integration tests failed');
+            process.exit(1);
+          }
+          console.log('Integration tests passed');
+        });
+        "
+        
+    - name: Upload unit test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: unit-test-results
+        path: test-results/unit-test-results.json
+        
+    - name: Upload integration test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: integration-test-results
+        path: test-results/integration-test-results.json
+
+  # Performance Tests
+  performance-tests:
+    name: Performance Tests
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'performance' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        npm ci
+        cd situ-design-extension && npm ci
+        
+    - name: Build plugin
+      run: |
+        cd situ-design-extension
+        npm run build
+        
+    - name: Setup test environment
+      run: |
+        mkdir -p test-results
+        
+    - name: Run performance tests
+      run: |
+        node -e "
+        const puppeteer = require('puppeteer');
+        const fs = require('fs');
+        
+        async function runPerformanceTests() {
+          const browser = await puppeteer.launch({ headless: true });
+          const page = await browser.newPage();
+          
+          await page.goto('file://' + process.cwd() + '/index.html');
+          await page.addScriptTag({ path: './plugins/situ-design/index.js' });
+          await page.addScriptTag({ path: './ci-test-runner.js' });
+          
+          const results = await page.evaluate(async () => {
+            const ciRunner = new SituDesignCIRunner();
+            await ciRunner.runPerformanceTests();
+            return ciRunner.performanceMetrics;
+          });
+          
+          fs.writeFileSync('./test-results/performance-test-results.json', JSON.stringify(results, null, 2));
+          
+          await browser.close();
+          
+          // Check performance thresholds
+          const thresholds = {
+            fillApplication: 100,
+            borderApplication: 100,
+            layoutApplication: 100,
+            stateSwitching: 50,
+            rehydration: 200,
+            mcpTransformation: 10
+          };
+          
+          let passed = true;
+          results.forEach(metric => {
+            if (metric.duration > 0) {
+              const threshold = thresholds[metric.testName.toLowerCase().replace(/\\s+/g, '')];
+              if (threshold && metric.duration > threshold) {
+                console.error(\`Performance threshold exceeded for \${metric.testName}: \${metric.duration}ms > \${threshold}ms\`);
+                passed = false;
+              }
+            }
+          });
+          
+          return passed;
+        }
+        
+        runPerformanceTests().then(success => {
+          if (!success) {
+            console.error('Performance tests failed');
+            process.exit(1);
+          }
+          console.log('Performance tests passed');
+        });
+        "
+        
+    - name: Upload performance test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: performance-test-results
+        path: test-results/performance-test-results.json
+
+  # Stress Tests
+  stress-tests:
+    name: Stress Tests
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'stress' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        npm ci
+        cd situ-design-extension && npm ci
+        
+    - name: Build plugin
+      run: |
+        cd situ-design-extension
+        npm run build
+        
+    - name: Setup test environment
+      run: |
+        mkdir -p test-results
+        
+    - name: Run stress tests
+      run: |
+        node -e "
+        const puppeteer = require('puppeteer');
+        const fs = require('fs');
+        
+        async function runStressTests() {
+          const browser = await puppeteer.launch({ headless: true });
+          const page = await browser.newPage();
+          
+          await page.goto('file://' + process.cwd() + '/index.html');
+          await page.addScriptTag({ path: './plugins/situ-design/index.js' });
+          await page.addScriptTag({ path: './ci-test-runner.js' });
+          
+          const results = await page.evaluate(async () => {
+            const ciRunner = new SituDesignCIRunner();
+            await ciRunner.runStressTests();
+            return ciRunner.testResults;
+          });
+          
+          fs.writeFileSync('./test-results/stress-test-results.json', JSON.stringify(results, null, 2));
+          
+          await browser.close();
+          
+          // Check stress test limits
+          const limits = {
+            maxElements: 1000,
+            maxOperations: 10000,
+            maxMemoryMB: 100
+          };
+          
+          let passed = true;
+          results.forEach(result => {
+            if (result.testData) {
+              if (result.testData.elementsCreated && result.testData.elementsCreated > limits.maxElements) {
+                console.error(\`Too many elements created: \${result.testData.elementsCreated} > \${limits.maxElements}\`);
+                passed = false;
+              }
+              if (result.testData.totalOperations && result.testData.totalOperations > limits.maxOperations) {
+                console.error(\`Too many operations: \${result.testData.totalOperations} > \${limits.maxOperations}\`);
+                passed = false;
+              }
+              if (result.testData.peakMemoryMB && result.testData.peakMemoryMB > limits.maxMemoryMB) {
+                console.error(\`Memory usage too high: \${result.testData.peakMemoryMB}MB > \${limits.maxMemoryMB}MB\`);
+                passed = false;
+              }
+            }
+          });
+          
+          return passed;
+        }
+        
+        runStressTests().then(success => {
+          if (!success) {
+            console.error('Stress tests failed');
+            process.exit(1);
+          }
+          console.log('Stress tests passed');
+        });
+        "
+        
+    - name: Upload stress test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: stress-test-results
+        path: test-results/stress-test-results.json
+
+  # Compatibility Tests
+  compatibility-tests:
+    name: Compatibility Tests
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'compatibility' }}
+    
+    strategy:
+      matrix:
+        browser: [chrome, firefox]
+        
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        npm ci
+        cd situ-design-extension && npm ci
+        
+    - name: Build plugin
+      run: |
+        cd situ-design-extension
+        npm run build
+        
+    - name: Setup test environment
+      run: |
+        mkdir -p test-results
+        
+    - name: Run compatibility tests
+      run: |
+        node -e "
+        const puppeteer = require('puppeteer');
+        const fs = require('fs');
+        
+        async function runCompatibilityTests() {
+          const browser = await puppeteer.launch({ 
+            headless: true,
+            product: '${{ matrix.browser }}'
+          });
+          const page = await browser.newPage();
+          
+          await page.goto('file://' + process.cwd() + '/index.html');
+          await page.addScriptTag({ path: './plugins/situ-design/index.js' });
+          await page.addScriptTag({ path: './ci-test-runner.js' });
+          
+          const results = await page.evaluate(async () => {
+            const ciRunner = new SituDesignCIRunner();
+            await ciRunner.runCompatibilityTests();
+            return ciRunner.testResults;
+          });
+          
+          fs.writeFileSync(\`./test-results/compatibility-test-results-\${{ matrix.browser }}.json\`, JSON.stringify(results, null, 2));
+          
+          await browser.close();
+          
+          // Check compatibility requirements
+          let passed = true;
+          results.forEach(result => {
+            if (result.testData && result.testData.supportPercentage < 80) {
+              console.error(\`Compatibility too low for \${result.testName}: \${result.testData.supportPercentage}% < 80%\`);
+              passed = false;
+            }
+          });
+          
+          return passed;
+        }
+        
+        runCompatibilityTests().then(success => {
+          if (!success) {
+            console.error('Compatibility tests failed');
+            process.exit(1);
+          }
+          console.log('Compatibility tests passed');
+        });
+        "
+        
+    - name: Upload compatibility test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: compatibility-test-results-${{ matrix.browser }}
+        path: test-results/compatibility-test-results-${{ matrix.browser }}.json
+
+  # Visual Regression Tests
+  visual-tests:
+    name: Visual Regression Tests
+    runs-on: ubuntu-latest
+    if: ${{ github.event.inputs.test_suite == 'all' || github.event.inputs.test_suite == 'visual' }}
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: |
+        npm ci
+        cd situ-design-extension && npm ci
+        
+    - name: Build plugin
+      run: |
+        cd situ-design-extension
+        npm run build
+        
+    - name: Setup test environment
+      run: |
+        mkdir -p test-results
+        mkdir -p test-baselines
+        
+    - name: Run visual regression tests
+      run: |
+        node -e "
+        const puppeteer = require('puppeteer');
+        const fs = require('fs');
+        
+        async function runVisualTests() {
+          const browser = await puppeteer.launch({ headless: true });
+          const page = await browser.newPage();
+          
+          await page.goto('file://' + process.cwd() + '/index.html');
+          await page.addScriptTag({ path: './plugins/situ-design/index.js' });
+          await page.addScriptTag({ path: './automated-testing-framework.js' });
+          
+          const results = await page.evaluate(async () => {
+            const tester = new SituDesignTester();
+            await tester.runVisualRegressionTests();
+            return tester.generateComprehensiveReport();
+          });
+          
+          fs.writeFileSync('./test-results/visual-test-results.json', JSON.stringify(results, null, 2));
+          
+          await browser.close();
+          return results.summary.successRate >= 95;
+        }
+        
+        runVisualTests().then(success => {
+          if (!success) {
+            console.error('Visual regression tests failed');
+            process.exit(1);
+          }
+          console.log('Visual regression tests passed');
+        });
+        "
+        
+    - name: Upload visual test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: visual-test-results
+        path: test-results/visual-test-results.json
+
+  # Test Results Summary
+  test-summary:
+    name: Test Results Summary
+    runs-on: ubuntu-latest
+    needs: [unit-integration-tests, performance-tests, stress-tests, compatibility-tests, visual-tests]
+    if: always()
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Download all test results
+      uses: actions/download-artifact@v4
+      with:
+        path: test-results
+        
+    - name: Generate test summary
+      run: |
+        node -e "
+        const fs = require('fs');
+        const path = require('path');
+        
+        function generateSummary() {
+          const summary = {
+            timestamp: new Date().toISOString(),
+            workflow: '${{ github.workflow }}',
+            runId: '${{ github.run_id }}',
+            commit: '${{ github.sha }}',
+            branch: '${{ github.ref_name }}',
+            results: {}
+          };
+          
+          // Collect all test results
+          const testFiles = [
+            'unit-test-results/unit-test-results.json',
+            'integration-test-results/integration-test-results.json',
+            'performance-test-results/performance-test-results.json',
+            'stress-test-results/stress-test-results.json',
+            'compatibility-test-results-chrome/compatibility-test-results-chrome.json',
+            'compatibility-test-results-firefox/compatibility-test-results-firefox.json',
+            'visual-test-results/visual-test-results.json'
+          ];
+          
+          testFiles.forEach(file => {
+            if (fs.existsSync(file)) {
+              const data = JSON.parse(fs.readFileSync(file, 'utf8'));
+              const testType = path.basename(file, '.json').replace('-test-results', '');
+              summary.results[testType] = data;
+            }
+          });
+          
+          // Calculate overall metrics
+          const allResults = Object.values(summary.results).flat();
+          const totalTests = allResults.length;
+          const passedTests = allResults.filter(r => r.passed).length;
+          
+          summary.overall = {
+            totalTests,
+            passedTests,
+            failedTests: totalTests - passedTests,
+            successRate: totalTests > 0 ? (passedTests / totalTests) * 100 : 0
+          };
+          
+          // Save summary
+          fs.writeFileSync('test-results/test-summary.json', JSON.stringify(summary, null, 2));
+          
+          // Generate markdown report
+          const markdown = \`# Test Results Summary
+          
+## Overall Results
+- **Total Tests**: \${summary.overall.totalTests}
+- **Passed**: \${summary.overall.passedTests}
+- **Failed**: \${summary.overall.failedTests}
+- **Success Rate**: \${summary.overall.successRate.toFixed(1)}%
+
+## Test Suite Results
+\${Object.entries(summary.results).map(([suite, data]) => \`
+### \${suite.charAt(0).toUpperCase() + suite.slice(1)} Tests
+- **Status**: \${data.summary ? (data.summary.successRate >= 90 ? '✅ PASSED' : '❌ FAILED') : '⚠️ NO DATA'}
+- **Success Rate**: \${data.summary ? data.summary.successRate.toFixed(1) + '%' : 'N/A'}
+\`).join('')}
+
+## Performance Metrics
+\${summary.results.performance ? summary.results.performance.map(metric => \`
+- **\${metric.testName}**: \${metric.duration >= 0 ? metric.duration.toFixed(2) + 'ms' : 'FAILED'}
+\`).join('') : 'No performance data available'}
+
+---
+*Generated on \${new Date().toISOString()}*
+\`;
+          
+          fs.writeFileSync('test-results/test-summary.md', markdown);
+          
+          console.log('Test summary generated');
+          console.log(\`Overall success rate: \${summary.overall.successRate.toFixed(1)}%\`);
+          
+          return summary.overall.successRate >= 85;
+        }
+        
+        generateSummary().then(success => {
+          if (!success) {
+            console.error('Overall test success rate below threshold');
+            process.exit(1);
+          }
+          console.log('All tests passed successfully');
+        });
+        "
+        
+    - name: Upload test summary
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-summary
+        path: test-results/test-summary.*
+        
+    - name: Comment on PR
+      if: github.event_name == 'pull_request'
+      uses: actions/github-script@v7
+      with:
+        script: |
+          const fs = require('fs');
+          const path = require('path');
+          
+          try {
+            const summaryPath = 'test-results/test-summary.md';
+            if (fs.existsSync(summaryPath)) {
+              const summary = fs.readFileSync(summaryPath, 'utf8');
+              
+              github.rest.issues.createComment({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                body: summary
+              });
+            }
+          } catch (error) {
+            console.error('Failed to comment on PR:', error);
+          }

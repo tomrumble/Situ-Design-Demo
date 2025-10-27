@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/assets/SITU.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Situ Design - React Inspector</title>
+    
+    <!-- Preload Phosphor Icons CDN for faster toolbar loading -->
+    <link rel="preload" href="https://unpkg.com/@phosphor-icons/webcomponents@2.1" as="script" crossorigin>
+    
+    <!-- Load obfuscated utility functions -->
+    <script src="/situ-demo-utils.bundle.js" defer></script>
+    
+    <!-- Load obfuscated inspector -->
+    <script src="/inspector/situImport.bundle.js" defer></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
