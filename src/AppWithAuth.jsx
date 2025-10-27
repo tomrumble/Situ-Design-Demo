@@ -34,7 +34,7 @@ const ProtectedRoute = ({ children }) => {
 export default function AppWithAuth() {
   return (
     <AuthProvider>
-      <Router basename={import.meta.env.PROD ? '/Situ-Design-Demo' : undefined}>
+      <Router basename={import.meta.env.PROD ? '/Situ-Design-Demo' : ''}>
         <Routes>
           {/* Auth Routes */}
           <Route path="/login" element={<LoginPage />} />
