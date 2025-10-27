@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && npm run fix:paths",
-    "fix:paths": "sed -i '' 's|src=\"/assets/|src=\"./assets/|g' dist/index.html && sed -i '' 's|href=\"/assets/|href=\"./assets/|g' dist/index.html",
+    "fix:paths": "sed -i '' 's|src=\"/assets/|src=\"./assets/|g' dist/index.html; sed -i '' 's|href=\"/assets/|href=\"./assets/|g' dist/index.html",
     "build:utils": "webpack --config webpack.utils.config.cjs",
     "build:all": "npm run build:utils && vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
