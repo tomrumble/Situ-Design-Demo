@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 
 export default defineConfig(({ command }) => {
   return {
-    base: '/',
+    base: '/Situ-Design-Demo/',
     resolve: {
       alias: {
         // No @plugins alias needed - we're using bundled scripts
