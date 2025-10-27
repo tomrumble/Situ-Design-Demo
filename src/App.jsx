@@ -3658,7 +3658,7 @@ function App() {
   }, []);
 
   return (
-    <Router basename={import.meta.env.PROD ? '/Situ-Design-Demo' : undefined}>
+    <Router>
       <Routes>
         {/* Auth Routes - Full page layouts without header */}
         <Route path="/login" element={<LoginPage />} />

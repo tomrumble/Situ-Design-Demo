@@ -10,13 +10,11 @@ import { AuthProvider } from './contexts/AuthContext'
  */
 
 // Preload Phosphor Icons for faster toolbar loading
-if (import.meta.env.DEV) {
-  // Load Phosphor Icons CDN early for immediate availability
-  const phosphorScript = document.createElement('script');
-  phosphorScript.type = 'module';
-  phosphorScript.src = 'https://unpkg.com/@phosphor-icons/webcomponents@2.1';
-  document.head.appendChild(phosphorScript);
-}
+// Works in both DEV and production (GitHub Pages)
+const phosphorScript = document.createElement('script');
+phosphorScript.type = 'module';
+phosphorScript.src = 'https://unpkg.com/@phosphor-icons/webcomponents@2.1';
+document.head.appendChild(phosphorScript);
 
 // Load the obfuscated inspector from the bundled script
 // The bundle auto-exports to window, but we need to call initializeSituInspector
