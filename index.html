@@ -13,7 +13,32 @@
     <script src="./situ-demo-utils.bundle.js" defer></script>
     
     <!-- Load obfuscated inspector -->
-    <script src="./inspector/situImport.bundle.js" defer></script>
+    <script src="./inspector/situImport.bundle.js"></script>
+    <script>
+      // Initialize inspector after bundle loads
+      (function() {
+        function initInspector() {
+          if (typeof window.installReactClickInspector === 'function') {
+            console.log('🔍 Initializing Situ Design Inspector...');
+            window.installReactClickInspector();
+            console.log('✅ Inspector initialized');
+          } else {
+            // Try again after a short delay if bundle isn't loaded yet
+            setTimeout(initInspector, 100);
+          }
+        }
+        
+        // Try immediately
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initInspector);
+        } else {
+          initInspector();
+        }
+        
+        // Also try on window load as fallback
+        window.addEventListener('load', initInspector);
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
