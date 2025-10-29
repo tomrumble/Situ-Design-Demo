@@ -1,10 +1,9 @@
+import { createRequire } from 'module';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { fileURLToPath } from 'node:url';
-import { dirname, resolve } from 'node:path';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const require = createRequire(import.meta.url);
+const babelPlugin = require('./plugins/situ-design/babel-jsx-source-attr.cjs');
 
 export default defineConfig(({ command }) => {
   return {
@@ -20,7 +19,7 @@ export default defineConfig(({ command }) => {
         command === 'serve'
           ? { 
               babel: { 
-                plugins: [[ resolve(__dirname, 'plugins/situ-design/babel-jsx-source-attr.cjs'), {} ]] 
+                plugins: [babelPlugin]
               } 
             }
           : {}
