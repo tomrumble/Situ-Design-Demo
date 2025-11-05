@@ -106,9 +106,9 @@ function Navigation() {
           { id: 'grid', label: 'Grid', path: '/overview/grid', badge: 'Experimental' },
           { id: 'spacing', label: 'Spacing', path: '/overview/spacing', badge: 'Experimental' },
           { id: 'Size', label: 'Size', path: '/overview/size', badge: 'Beta' },
-          { id: 'Position', label: 'Position', path: '/overview/position', badge: 'Beta' },
-          { id: 'Z-Index', label: 'Z-Index', path: '/overview/z-index', badge: 'Beta' },
-          { id: 'Overflow', label: 'Overflow', path: '/overview/overflow', badge: 'Beta' },
+          { id: 'Position', label: 'Position', path: '/overview/position', badge: 'Coming Soon' },
+          { id: 'Z-Index', label: 'Z-Index', path: '/overview/z-index', badge: 'Coming Soon' },
+          { id: 'Overflow', label: 'Overflow', path: '/overview/overflow', badge: 'Coming Soon' },
           { id: 'Transform', label: 'Transform', path: '/overview/transform', badge: 'Coming Soon' },
         ]
     },
@@ -3112,17 +3112,8 @@ function Shadows() {
   return (
     <div className="content-section">
 
-      <BetaSection title="Open Beta">
-        Situ is currently in open beta, you can sign up for free and start using Situ. We're actively working on improvements and stability and would love to hear your feedback. We don't recommend using the beta for any mission-critical projects. 
-      </BetaSection>
-
-      <div className="content-header">
-        <h1>Shadows</h1>
-        <p>Edit shadow styles, offsets, and colors directly in your app. See real-time previews, keep them through reloads, and stage them to Cursor via MCP.</p>
-      </div>
-
       <TipSection title="coming soon">
-        Shadow editing is coming soon. We're actively working on getting this feature ready for prime time. Keep an eye out for updates!
+      Shadow editing is coming soon. We're actively working on getting this feature ready for prime time. Keep an eye out for updates!
       </TipSection>
     </div>
   )

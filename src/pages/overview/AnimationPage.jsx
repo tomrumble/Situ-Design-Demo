@@ -5,19 +5,9 @@ import TipSection from '../../components/TipSection';
 export const AnimationPage = () => {
   return (
     <div className="content-section">
-      <div className="content-header">
-        <h1>Animation</h1>
-        <p>Animation properties and keyframes</p>
-      </div>
-
-      <TipSection title="TRY IT OUT">
-        Inspect any layout container below to change its layout properties via the sidebar, and see the changes reflected in real-time. Hold <kbd>Alt</kbd> and <kbd>Click</kbd> containers to edit them.
+      <TipSection title="coming soon">
+        Animation editing is coming soon. We're actively working on getting this feature ready for prime time. Keep an eye out for updates!
       </TipSection>
-
-      <DemoCard>
-        <h3>Animation</h3>
-        <p>Animation documentation coming soon.</p>
-      </DemoCard>
     </div>
   );
 };

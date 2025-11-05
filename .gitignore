@@ -106,3 +106,5 @@ env.bak/
 venv.bak/
 .venv/
 .env/
+
+src (backup)

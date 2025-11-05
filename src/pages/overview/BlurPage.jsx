@@ -5,19 +5,9 @@ import TipSection from '../../components/TipSection';
 export const BlurPage = () => {
   return (
     <div className="content-section">
-      <div className="content-header">
-        <h1>Blur</h1>
-        <p>Blur effects and filters</p>
-      </div>
-
-      <TipSection title="TRY IT OUT">
-        Inspect any layout container below to change its layout properties via the sidebar, and see the changes reflected in real-time. Hold <kbd>Alt</kbd> and <kbd>Click</kbd> containers to edit them.
+      <TipSection title="coming soon">
+        Blur editing is coming soon. We're actively working on getting this feature ready for prime time. Keep an eye out for updates!
       </TipSection>
-
-      <DemoCard>
-        <h3>Blur</h3>
-        <p>Blur effects documentation coming soon.</p>
-      </DemoCard>
     </div>
   );
 };

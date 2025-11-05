@@ -5,19 +5,9 @@ import TipSection from '../../components/TipSection';
 export const DistancePage = () => {
   return (
     <div className="content-section">
-      <div className="content-header">
-        <h1>Distance</h1>
-        <p>Measuring distances between elements</p>
-      </div>
-
-      <TipSection title="TRY IT OUT">
-        Inspect any layout container below to change its layout properties via the sidebar, and see the changes reflected in real-time. Hold <kbd>Alt</kbd> and <kbd>Click</kbd> containers to edit them.
+        <TipSection title="TRY IT OUT">
+        We're working on the demo page for distance, but you can try it right now by holding <kbd>alt</kbd>, selecting an element, and then hovering any other element on the page.
       </TipSection>
-
-      <DemoCard>
-        <h3>Distance</h3>
-        <p>Distance measurement documentation coming soon.</p>
-      </DemoCard>
     </div>
   );
 };

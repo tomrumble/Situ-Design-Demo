@@ -5,19 +5,9 @@ import TipSection from '../../components/TipSection';
 export const SelectionPage = () => {
   return (
     <div className="content-section">
-      <div className="content-header">
-        <h1>Selection</h1>
-        <p>Element selection features</p>
-      </div>
-
       <TipSection title="TRY IT OUT">
-        Inspect any layout container below to change its layout properties via the sidebar, and see the changes reflected in real-time. Hold <kbd>Alt</kbd> and <kbd>Click</kbd> containers to edit them.
+        We're working on the demo page for this feature, but you can try it right now by holding <kbd>alt</kbd> and <kbd>clicking</kbd> 
       </TipSection>
-
-      <DemoCard>
-        <h3>Selection</h3>
-        <p>Selection tools documentation coming soon.</p>
-      </DemoCard>
     </div>
   );
 };

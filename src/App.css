@@ -327,8 +327,8 @@ body {
 }
 
 .badge {
-  background: #141414;
-  color: #797979;
+  background: #202020;
+  color: #808080;
   padding: 1px 6px;
   border-radius: 4px;
   font-size: 10px;
@@ -756,7 +756,7 @@ body {
 
 /* JSON Card */
 .json-card {
-  background: #0a0a0a;
+  background: #141414;
   border: 1px solid #1E1F21;
   border-radius: 8px;
   overflow: hidden;
@@ -833,7 +833,7 @@ body {
 
 /* Demo Card */
 .demo-card {
-  background: #0a0a0a;
+  background: #141414;
   background-image:
     radial-gradient(circle, #333 1px, transparent 1px);
   background-size: 20px 20px;
@@ -874,7 +874,7 @@ body {
 
 /* Hero Text Card */
 .hero-text-card {
-  background: #0a0a0a;
+  background: #141414;
   background-image:
     radial-gradient(circle, #333 1px, transparent 1px);
   background-size: 20px 20px;
@@ -1766,7 +1766,7 @@ kbd {
   display: flex;
   align-items: flex-start;
   padding: 24px;
-  background: #141414;
+  background: #202020;
   border-radius: 12px;
   position: relative;
   overflow: hidden;
@@ -1994,7 +1994,7 @@ kbd {
 
 /* Edit Viewer Container (unified diff/mcp tabs) */
 .edit-viewer-container {
-  background: #0a0a0a;
+  background: #141414;
   display: flex;
   flex-direction: column;
   border: 1px solid #1E1F21;

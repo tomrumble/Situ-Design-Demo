@@ -16,18 +16,18 @@ export const AboutPage = () => {
       </BetaSection>
 
       <div className="content-header">
-        <h1>A mini-Figma in your localhost</h1>
-        <p>Prompts accelerate features, but they lag design. Figma is heavy and its pseudo-code MCP leaves agents guessing. Situ is dev-native — lightweight, instant, and built where you build.</p>
+        <h1>A tiny design editor in your localhost</h1>
+        <p>Describing design changes isn't fun. Situ let's you tweak your design the same way you would in Figma, but without leaving your dev environment. MCP handles passing the changes to your agent to be implemented in your codebase. It's simple but powerful.</p>
       </div>
 
-      <HeroTextSection>
-        <h3>"The missing front-end tool for Cursor"</h3>
-        <p>—Con Huynh, Lead Front-end Engineer @ Hypetap</p>
-      </HeroTextSection>
+
+      <TipSection title="strictly dev env only">
+      Situ is built from the ground up to <b>only</b> exist in your dev environment. No trace of it can exist in your production environment — all core Situ code is self-contained in the extension and stripped from any builds.
+      </TipSection>
 
       {/* The Problem */}
       <div className="content-header">
-        <h2>Selection → Code</h2>
+        <h2>Click it, find it.</h2>
         <div 
             className="fills-header-image"
             style={{
@@ -43,7 +43,6 @@ export const AboutPage = () => {
               marginBottom: '16px',
             }}
           />
-          <h3>Stop rummaging through your codebase.</h3>
         <p>Situ can deeplink you straight to your IDE from your selection. It's a simple as selecting an element and clicking the 'Open in Cursor' button and boom — you're looking at the right file, right line, right column.</p>
         <div className="flex-list">
           <div className="flex-list-item">Select any element on the page</div>
@@ -52,13 +51,9 @@ export const AboutPage = () => {
         </div>
       </div>
 
-<WarningSection title="Requirements">
-      Situ is currently compatible with React 18+ projects using Vite 5.0+. It will NOT work as intended with any other frameworks/languages. We intend to support more frameworks in the future.
-      </WarningSection>
-
       {/* The Problem */}
       <div className="content-header">
-        <h2>Design → MCP</h2>
+        <h2>Design → MCP → Agent</h2>
         <div 
             className="fills-header-image"
             style={{
@@ -74,7 +69,7 @@ export const AboutPage = () => {
               marginBottom: '16px',
             }}
           />
-          <h3>Edit the real thing, not a representation of it.</h3>
+          <h3>Edit the real thing.</h3>
         <p>Situ brings design editing directly into your development workflow. Edit styles, layout, spacing and more with instant visual feedback, persistance through reloads and an instant MCP envelope of edits to be sent to your agent.</p>
         <div className="flex-list">
           <div className="flex-list-item">Select any element on the page</div>
@@ -84,9 +79,9 @@ export const AboutPage = () => {
         </div>
       </div>
 
-      <TipSection title="strictly dev env only">
-      Situ is built from the ground up to <b>only</b> exist in your dev environment. No trace of it can exist in your production environment — all core Situ code is self-contained in the extension and stripped from any builds.
-      </TipSection>
+      <WarningSection title="Requirements">
+      Situ is currently compatible with React 18+ projects using Vite 5.0+. It will NOT work as intended with any other frameworks/languages. We intend to support more frameworks in the future.
+      </WarningSection>
     </div>
   );
 };
