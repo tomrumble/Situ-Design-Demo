@@ -7,7 +7,7 @@ const babelPlugin = require('./plugins/situ-design/babel-jsx-source-attr.cjs');
 
 export default defineConfig(({ command }) => {
   return {
-    base: '/Situ-Design-Demo/',
+    base: '/',
     resolve: {
       alias: {
         // No @plugins alias needed - we're using bundled scripts
