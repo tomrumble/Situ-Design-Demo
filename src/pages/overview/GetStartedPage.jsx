@@ -37,6 +37,7 @@ export const GetStartedPage = () => {
               width: '100%',
               borderRadius: '12px',
               backgroundColor: '#181818',
+              border: '1px solid #1E1F21',
             }}
           />
 

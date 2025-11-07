@@ -1,7 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.jsx'
-import { AuthProvider } from './contexts/AuthContext'
+import AppWithAuth from './AppWithAuth.jsx'
 
 /* CSS Separation:
  * - src/App.css: Main app styling (Base UI dark theme)
@@ -40,8 +39,6 @@ window.addEventListener('load', () => {
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AuthProvider>
-      <App />
-    </AuthProvider>
+    <AppWithAuth />
   </React.StrictMode>,
 )

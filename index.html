@@ -39,6 +39,14 @@
         window.addEventListener('load', initInspector);
       })();
     </script>
+  
+    <script>
+      (function(){
+        try {
+          window.__SITU_ENFORCE_JWT = true;
+        } catch(_) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

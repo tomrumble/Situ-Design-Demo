@@ -18,9 +18,9 @@ export default defineConfig(({ command }) => {
       react({
         // Always use Babel plugin to inject data-source attributes for inspector
         // This is required for inspector overlays to work in production builds
-        babel: { 
-          plugins: [babelPlugin]
-        }
+              babel: { 
+                plugins: [babelPlugin]
+              } 
       }),
     ],
     server: {

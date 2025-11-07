@@ -34,6 +34,9 @@ jobs:
       
       - name: Build
         run: npm run build
+        env:
+          # Cloud Run backend URL (use secret if set, otherwise use production URL)
+          VITE_API_URL: ${{ secrets.VITE_API_URL || 'https://situ-design-backend-qt3kmin7pq-uc.a.run.app' }}
       
       - name: Setup Pages
         uses: actions/configure-pages@v4

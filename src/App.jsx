@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'
+import { Routes, Route, Link, useLocation, useNavigate } from 'react-router-dom'
 import { ScrollArea } from '@base-ui-components/react/scroll-area'
 import './App.css'
 import TipSection from './components/TipSection'
@@ -3113,7 +3113,7 @@ function Shadows() {
     <div className="content-section">
 
       <TipSection title="coming soon">
-      Shadow editing is coming soon. We're actively working on getting this feature ready for prime time. Keep an eye out for updates!
+        Shadow editing is coming soon. We're actively working on getting this feature ready for prime time. Keep an eye out for updates!
       </TipSection>
     </div>
   )
@@ -3649,14 +3649,6 @@ function App() {
   }, []);
 
   return (
-    <Router basename="/">
-      <Routes>
-        {/* Auth Routes - Full page layouts without header */}
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
-        
-        {/* Main App Routes - With header and navigation */}
-        <Route path="/*" element={
           <div className="app">
             {/* Header */}
             <MainHeader />
@@ -3669,9 +3661,6 @@ function App() {
                     <ScrollArea.Viewport className="scroll-viewport">
                       <ScrollArea.Content className="scroll-content">
                         <Routes>
-                          {/* Account page - inside main app structure */}
-                          <Route path="/account" element={<AccountPage />} />
-                          
                           {/* Situ Routes */}
                           <Route path="/overview/get-started" element={<GetStartedPage />} />
                           <Route path="/overview/releases" element={<ReleasesPage />} />
@@ -3732,9 +3721,6 @@ function App() {
               </div>
             </div>
           </div>
-        } />
-      </Routes>
-    </Router>
   )
 }
 
