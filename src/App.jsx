@@ -130,13 +130,6 @@ function Navigation() {
           { id: 'Transition', label: 'Transition', path: '/overview/transition', badge: 'Coming Soon'},
           { id: 'Animation', label: 'Animation', path: '/overview/animation', badge: 'Coming Soon'},
         ]
-    },
-    {
-      title: 'Privacy & Terms',
-      items: [
-        { id: 'privacy', label: 'Privacy Policy', path: '/privacy' },
-        { id: 'terms', label: 'Terms of Service', path: '/terms' }
-      ]
     }
   ]
 
@@ -150,8 +143,16 @@ function Navigation() {
               <NavButton key={item.id} item={item} />
             ))}
           </nav>
-        </div>
+        </div>       
       ))}
+            <div>
+        <p style={{ fontSize: '12px', color: '#808080', maxWidth: '300px', textAlign: 'center', lineHeight: '1.5' }}>
+          {' '}
+          <Link to="/terms" style={{ color: '#808080', textDecoration: 'underline' }}>Terms of Service</Link>
+          {' '}and{' '}
+          <Link to="/privacy" style={{ color: '#808080', textDecoration: 'underline' }}>Privacy Policy</Link>
+        </p>
+      </div>
     </aside>
   )
 }
