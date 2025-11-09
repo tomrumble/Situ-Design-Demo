@@ -3,6 +3,8 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import '../styles/AuthPages.css';
 import situLogo from '../assets/SITU.svg';
+import vsCodeIcon from '../assets/vs-code.svg';
+import cursorLogo from '../assets/cursor-logo.svg';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -56,13 +58,47 @@ export const RegisterPage = () => {
 
   return (
     <div className="auth-container">
-      <img src={situLogo} alt="Situ" className="auth-logo" />
+      <Link to="/">
+        <img src={situLogo} alt="Situ" className="auth-logo" />
+      </Link>
+      {!useEmail && (
+        <div className="auth-card">
+          <div className="auth-header">
+            <h1>1. Install the extension</h1>
+          </div>
+          <div className="auth-header">
+            <p>Search for "Situ" in the Cursor/VS Code Extensions marketplace and install it, or download the .visx:</p>
+          </div>
+
+          <>
+            <button
+                type="button"
+                className="google-auth-button"
+                onClick={() => window.open('https://open-vsx.org/extension/SituDesign/situ-design', '_blank', 'noopener,noreferrer')}
+                disabled={loading}
+              >
+                <img src={cursorLogo} alt="Cursor" className="google-icon" width="20" height="20" />
+                Cursor Marketplace (Open VSX)
+              </button>
+              <button
+                type="button"
+                className="google-auth-button"
+                onClick={() => window.open('https://marketplace.visualstudio.com/items?itemName=SituDesign.situ-design', '_blank', 'noopener,noreferrer')}
+                disabled={loading}
+              >
+                <img src={vsCodeIcon} alt="VS Code" className="google-icon" width="18" height="18" />
+                VS Code Marketplace
+              </button>
+            </>
+
+        </div>
+      )}
       <div className="auth-card">
         <div className="auth-header">
-          <h1>Join the Open Beta</h1>
+          <h1>2. Activate the Extension</h1>
         </div>
         <div className="auth-header">
-          <p>Create a free account to activate Situ</p>
+          <p>Create a free account and login to the extension via the command palette after installing the extension</p>
         </div>
 
         {(error || authError) && (
@@ -184,6 +220,14 @@ export const RegisterPage = () => {
             </p>
           </div>
         )}
+      </div>
+      <div>
+        <p style={{ fontSize: '12px', color: '#808080', maxWidth: '300px', textAlign: 'center', lineHeight: '1.5' }}>
+          By creating an account, you agree to the{' '}
+          <Link to="/terms" style={{ color: '#808080', textDecoration: 'underline' }}>Terms of Service</Link>
+          {' '}and{' '}
+          <Link to="/privacy" style={{ color: '#808080', textDecoration: 'underline' }}>Privacy Policy</Link>
+        </p>
       </div>
     </div>
   );

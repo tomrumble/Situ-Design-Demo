@@ -10,10 +10,6 @@ export const AboutPage = () => {
   return (
     <div className="content-section">
 
-<WarningSection title="LOGIN ISSUES">
-      We're aware of some issues with logging in via Cursor/VS Code. We've pushed a fix as of 1.0.7 and are in the process of verifying it.
-      </WarningSection>
-
     <BetaSection title="Open Beta">
       Situ is currently in open beta, you can sign up for free and start using Situ. We're actively working on improvements and stability and would love to hear your feedback. We don't recommend using the beta for any mission-critical projects. 
       </BetaSection>

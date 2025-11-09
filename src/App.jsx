@@ -46,6 +46,8 @@ import { TransitionPage } from './pages/overview/TransitionPage'
 import { AnimationPage } from './pages/overview/AnimationPage'
 import { GridPage } from './pages/overview/GridPage'
 import { SpacingPage } from './pages/overview/SpacingPage'
+import { TermsPage } from './pages/TermsPage'
+import { PrivacyPage } from './pages/PrivacyPage'
 import SectionNav from './components/SectionNav'
 
 // Utility: escape HTML for safe insertion
@@ -85,8 +87,8 @@ function Navigation() {
     {
       title: 'Situ',
       items: [
-        { id: 'get-started', label: 'Get Started', path: '/overview/get-started' },
         { id: 'about', label: 'About Situ', path: '/overview/about' },
+        { id: 'get-started', label: 'Get Started', path: '/overview/get-started' }, 
         { id: 'Releases', label: 'Releases', path: '/overview/releases' }
       ]
     },
@@ -128,6 +130,13 @@ function Navigation() {
           { id: 'Transition', label: 'Transition', path: '/overview/transition', badge: 'Coming Soon'},
           { id: 'Animation', label: 'Animation', path: '/overview/animation', badge: 'Coming Soon'},
         ]
+    },
+    {
+      title: 'Privacy & Terms',
+      items: [
+        { id: 'privacy', label: 'Privacy Policy', path: '/privacy' },
+        { id: 'terms', label: 'Terms of Service', path: '/terms' }
+      ]
     }
   ]
 
@@ -3702,6 +3711,10 @@ function App() {
                           <Route path="/overview/multi-selection" element={<About />} />
                           <Route path="/overview/keyboard-shortcuts" element={<About />} />
                           <Route path="/overview/customization" element={<About />} />
+                          
+                          {/* Legal Routes */}
+                          <Route path="/terms" element={<TermsPage />} />
+                          <Route path="/privacy" element={<PrivacyPage />} />
                           
                           {/* Default Routes */}
                           <Route path="/overview/basic-elements" element={<BasicElements />} />

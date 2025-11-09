@@ -24,11 +24,20 @@ const NavButton = ({ item }) => {
     return 'badge badge-default';
   };
 
+  const isActive = () => {
+    const currentPath = location.pathname;
+    // Highlight "About Situ" when on homepage
+    if (item.path === '/overview/about' && (currentPath === '/' || currentPath === '/overview')) {
+      return true;
+    }
+    return currentPath === item.path;
+  };
+
   return (
     <Link
       key={item.id}
       to={item.path}
-      className={`navbar-item ${location.pathname === item.path ? 'active' : ''}`}
+      className={`navbar-item ${isActive() ? 'active' : ''}`}
       onClick={handleClick}
     >
       {item.label}

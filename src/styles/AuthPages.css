@@ -49,8 +49,9 @@
 .auth-header p {
   margin-top: 0;
   margin-bottom: 16px;
-  font-size: 18px;
-  color: #059669;
+  font-size: 16px;
+  color: #808080;
+  line-height: 1.5;
 }
 
 /* Form */
