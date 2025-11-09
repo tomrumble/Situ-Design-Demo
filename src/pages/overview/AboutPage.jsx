@@ -10,6 +10,9 @@ export const AboutPage = () => {
   return (
     <div className="content-section">
 
+<WarningSection title="LOGIN ISSUES">
+      We're aware of some issues with logging in via Cursor/VS Code. We've pushed a fix as of 1.0.7 and are in the process of verifying it.
+      </WarningSection>
 
     <BetaSection title="Open Beta">
       Situ is currently in open beta, you can sign up for free and start using Situ. We're actively working on improvements and stability and would love to hear your feedback. We don't recommend using the beta for any mission-critical projects. 
@@ -24,32 +27,6 @@ export const AboutPage = () => {
       <TipSection title="strictly dev env only">
       Situ is built from the ground up to <b>only</b> exist in your dev environment. No trace of it can exist in your production environment — all core Situ code is self-contained in the extension and stripped from any builds.
       </TipSection>
-
-      {/* The Problem */}
-      <div className="content-header">
-        <h2>Click it, find it.</h2>
-        <div 
-            className="fills-header-image"
-            style={{
-                backgroundImage: 'url(/inspector/assets/images/open-in-cursor.png)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-              height: '300px',
-              width: '100%',
-              borderRadius: '12px',
-              backgroundColor: '#181818',
-              marginTop: '16px',
-              marginBottom: '16px',
-            }}
-          />
-        <p>Situ can deeplink you straight to your IDE from your selection. It's a simple as selecting an element and clicking the 'Open in Cursor' button and boom — you're looking at the right file, right line, right column.</p>
-        <div className="flex-list">
-          <div className="flex-list-item">Select any element on the page</div>
-          <div className="flex-list-item">Click the <img src={codeIcon} alt="code icon" style={{ width: '20px', height: '20px', verticalAlign: 'middle', marginTop: '2px' }} />button in the toolbar/sidebar</div>
-          <div className="flex-list-item">Cursor will open at the right file, line and column</div>
-        </div>
-      </div>
 
       {/* The Problem */}
       <div className="content-header">
@@ -82,6 +59,32 @@ export const AboutPage = () => {
       <WarningSection title="Requirements">
       Situ is currently compatible with React 18+ projects using Vite 5.0+. It will NOT work as intended with any other frameworks/languages. We intend to support more frameworks in the future.
       </WarningSection>
+
+      {/* The Problem */}
+      <div className="content-header">
+        <h2>Click it, find it.</h2>
+        <div 
+            className="fills-header-image"
+            style={{
+                backgroundImage: 'url(/inspector/assets/images/open-in-cursor.png)',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              backgroundRepeat: 'no-repeat',
+              height: '300px',
+              width: '100%',
+              borderRadius: '12px',
+              backgroundColor: '#181818',
+              marginTop: '16px',
+              marginBottom: '16px',
+            }}
+          />
+        <p>Situ can deeplink you straight to your IDE from your selection. It's a simple as selecting an element and clicking the 'Open in Cursor' button and boom — you're looking at the right file, right line, right column.</p>
+        <div className="flex-list">
+          <div className="flex-list-item">Select any element on the page</div>
+          <div className="flex-list-item">Click the <img src={codeIcon} alt="code icon" style={{ width: '20px', height: '20px', verticalAlign: 'middle', marginTop: '2px' }} />button in the toolbar/sidebar</div>
+          <div className="flex-list-item">Cursor will open at the right file, line and column</div>
+        </div>
+      </div>
     </div>
   );
 };
