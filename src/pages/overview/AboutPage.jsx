@@ -40,6 +40,7 @@ export const AboutPage = () => {
               backgroundColor: '#181818',
               marginTop: '16px',
               marginBottom: '16px',
+              border: '1px solid #1E1F21',
             }}
           />
           <h3>Edit the real thing.</h3>
@@ -72,6 +73,7 @@ export const AboutPage = () => {
               backgroundColor: '#181818',
               marginTop: '16px',
               marginBottom: '16px',
+              border: '1px solid #1E1F21',
             }}
           />
         <p>Situ can deeplink you straight to your IDE from your selection. It's a simple as selecting an element and clicking the 'Open in Cursor' button and boom — you're looking at the right file, right line, right column.</p>
