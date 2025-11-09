@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./inspector/assets/SITU.svg" />
+    <link rel="icon" type="image/svg+xml" href="/inspector/assets/SITU.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Situ Design - React Inspector</title>
     
@@ -10,10 +10,10 @@
     <link rel="preload" href="https://unpkg.com/@phosphor-icons/webcomponents@2.1" as="script" crossorigin>
     
     <!-- Load obfuscated utility functions -->
-    <script src="./situ-demo-utils.bundle.js" defer></script>
+    <script src="/situ-demo-utils.bundle.js" defer></script>
     
     <!-- Load obfuscated inspector -->
-    <script src="./inspector/situImport.bundle.js"></script>
+    <script src="/inspector/situImport.bundle.js"></script>
     <script>
       // Initialize inspector after bundle loads
       (function() {
@@ -22,21 +22,52 @@
             console.log('🔍 Initializing Situ Design Inspector...');
             window.installReactClickInspector();
             console.log('✅ Inspector initialized');
-          } else {
-            // Try again after a short delay if bundle isn't loaded yet
-            setTimeout(initInspector, 100);
+            return true;
+          } else if (window.SituInspector && typeof window.SituInspector.initialize === 'function') {
+            console.log('🔍 Initializing Situ Design Inspector (via SituInspector)...');
+            window.SituInspector.initialize();
+            console.log('✅ Inspector initialized');
+            return true;
           }
+          return false;
         }
         
         // Try immediately
         if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', initInspector);
+          document.addEventListener('DOMContentLoaded', function() {
+            if (!initInspector()) {
+              // Retry with delay if bundle isn't loaded yet
+              let attempts = 0;
+              const maxAttempts = 20;
+              const retry = setInterval(function() {
+                attempts++;
+                if (initInspector() || attempts >= maxAttempts) {
+                  clearInterval(retry);
+                }
+              }, 100);
+            }
+          });
         } else {
-          initInspector();
+          if (!initInspector()) {
+            // Retry with delay if bundle isn't loaded yet
+            let attempts = 0;
+            const maxAttempts = 20;
+            const retry = setInterval(function() {
+              attempts++;
+              if (initInspector() || attempts >= maxAttempts) {
+                clearInterval(retry);
+              }
+            }, 100);
+          }
         }
         
         // Also try on window load as fallback
-        window.addEventListener('load', initInspector);
+        window.addEventListener('load', function() {
+          if (!window.__SITU_INSPECTOR_INITIALIZED) {
+            initInspector();
+            window.__SITU_INSPECTOR_INITIALIZED = true;
+          }
+        });
       })();
     </script>
   
