@@ -10,7 +10,7 @@ const MainHeader = () => {
           <div className="logo">
             <img src={situLogo} alt="SITU" width="52" />
           </div>
-          <div className="version-badge">1.0.8-open-beta</div>
+          <div className="version-badge">1.0.9-open-beta</div>
         </div>
         <div className="header-right">
           <AuthButtons />

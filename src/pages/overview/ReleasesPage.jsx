@@ -18,122 +18,155 @@ export const ReleasesPage = () => {
 
       {/* Current Release */}
       <div className="content-header">
-        <h3>1.0.0-open-beta3 <span style={{ color: '#6b7280', fontSize: '14px', fontWeight: 'normal' }}>Current</span></h3>
-        <h4><i>Latest beta release with state editing, enhanced MCP integration, and improved border/fill editing.</i></h4>
+        <h3>1.0.9 <span style={{ color: '#6b7280', fontSize: '14px', fontWeight: 'normal' }}>Current</span></h3>
+        <h4><i>Major improvements to drag interactions, padding overlays, and undo/redo system.</i></h4>
         <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
-            <li>CSS State Detection: Automatic detection of <code>:hover</code> rules from stylesheets</li>
-            <li>State Editing: Edit default and hover states with visual preview</li>
-            <li>Border Edge Editor: Visual 4-edge border editor with per-edge control</li>
-            <li>Enhanced MCP Format: Slim MCP format with <code>action</code>, <code>locator</code>, and <code>scope</code> for AI consumption</li>
-            <li>Fill Persistence: Improved gradient editing with stop-level control</li>
-            <li>Source Location Tracking: File:line:col tracking for all edits</li>
-            <li>Differential Storage: Only changed properties stored in edits</li>
+            <li><strong>Drag Shield Lifecycle:</strong> Fixed drag shield cleanup for gaps and padding overlays - drags are now fully repeatable while element remains selected</li>
+            <li><strong>Padding Overlay Parity:</strong> Padding overlays now have full feature parity with gap overlays including Alt+drag for symmetrical adjustment (top/bottom, left/right)</li>
+            <li><strong>Shift Snapping:</strong> Shift+drag now snaps both gaps and padding to 4px increments for precise alignment</li>
+            <li><strong>Hover Activation:</strong> Improved hover activation to only trigger on dragpoint areas, not the full overlay band</li>
+            <li><strong>Click Handling:</strong> Fixed single-click deselection after drag operations - no more double-click required</li>
+            <li><strong>Undo/Redo System:</strong> Enhanced undo/redo with proper action isolation and staged edits chip reliability</li>
+            <li><strong>Live Overlay Updates:</strong> Gap and padding overlays now update live during undo/redo operations</li>
+            <li><strong>Margin/Gap Delineation:</strong> Robust separation between margin and gap handling to prevent mixed spacing</li>
+            <li><strong>Staged Edits Chip:</strong> Improved reliability of the staged edits indicator in the bottom-right corner</li>
           </ul>
         </div>
-        <TipSection title="Experimental">
-        State editing is still experimental. Border and fill editing has been completely rebuilt for better reliability.
-      </TipSection>
+        <TipSection title="Improved Interactions">
+          All drag interactions are now more reliable and repeatable. Padding overlays work exactly like gap overlays with full modifier key support.
+        </TipSection>
       </div>
 
-
-
-      {/* v1.0.0-beta.3 */}
+      {/* v1.0.8 */}
       <div className="content-header">
-        <h3>1.0.0-beta.3</h3>
-        <h4><i>Foundation release with core editing capabilities</i></h4>
+        <h3>1.0.8</h3>
+        <h4><i>Authentication reliability improvements</i></h4>
         <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
-            <li>Padding Inspection: Visual green diagonal stripes for padding areas</li>
-            <li>Inline Text Editing: Alt+Double-click to edit text with style preservation</li>
-            <li>Styles Sidebar: Comprehensive sidebar for real-time property editing</li>
-            <li>Flexbox Controls: Interactive 3x3 grid for justify-content and align-items</li>
-            <li>Element Toolbar: Bottom toolbar with IDE navigation</li>
-            <li>Color Picker: Advanced HSV controls with OKLCH support</li>
-            <li>Gradient Editor: Multi-stop editor with draggable stops</li>
-            <li>Background Fills: Dynamic fill layer management</li>
+            <li><strong>Production Backend:</strong> Hardcoded production backend URL for JWKS endpoint to ensure reliable authentication</li>
+            <li><strong>Connection Fixes:</strong> Removed localhost fallback to prevent ERR_CONNECTION_REFUSED errors in production</li>
+            <li><strong>Reliability:</strong> Improved authentication verification for production deployments</li>
           </ul>
         </div>
       </div>
 
-      {/* v1.0.0-beta.2 */}
+      {/* v1.0.7 */}
       <div className="content-header">
-        <h3>1.0.0-beta.2</h3>
-        <h4><i>Enhanced gap detection and spacing visualization</i></h4>
+        <h3>1.0.7</h3>
+        <h4><i>Backend URL enforcement</i></h4>
         <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
-            <li>Multi-Gap Editing: Edit multiple gaps with same value simultaneously</li>
-            <li>Shift+Click Control: Hold Shift to edit individual gaps</li>
-            <li>Color-Coded Spacing: Orange for margins, Pink for gap properties</li>
-            <li>Gap Input Chips: Click to input precise pixel values</li>
-            <li>Component Name Chips: Display component names on selection</li>
-            <li>Floated Element Support: Special handling for positioned elements</li>
-            <li>Babel Plugin Cleanup: Streamlined build logging</li>
+            <li><strong>JWKS Endpoint:</strong> Force JWKS fetch to production backend URL, removing localhost/heuristic fallbacks</li>
+            <li><strong>Production Reliability:</strong> Ensures production authentication works reliably without fallbacks</li>
           </ul>
         </div>
       </div>
 
-      {/* v1.0.0-beta.1 */}
+      {/* v1.0.6 */}
       <div className="content-header">
-        <h3>1.0.0-beta.1</h3>
-        <h4><i>Initial beta release with gap detection and measurements</i></h4>
+        <h3>1.0.6</h3>
+        <h4><i>Smart environment detection</i></h4>
         <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
-            <li>Gap Detection: Visual indicators for spaces between elements</li>
-            <li>Interactive Gap Resizing: Drag to resize gaps in real-time</li>
-            <li>Distance Measurements: Figma-style measurements between elements</li>
-            <li>Interactive Cursors: Resize cursors on gap overlays</li>
-            <li>Component Differentiation: Different colors for React vs DOM elements</li>
-            <li>Four-Directional Measurements: Parent-child relationship measurements</li>
+            <li><strong>Auto-Detection:</strong> Inspector now automatically detects HTTPS (production) environment and uses production backend URL</li>
+            <li><strong>Backward Compatibility:</strong> Fixes ERR_CONNECTION_REFUSED errors for users with existing projects</li>
+            <li><strong>Smart Fallback:</strong> Works even if window.__SITU_BACKEND_URL is not set in older projects</li>
           </ul>
         </div>
       </div>
 
-      {/* v1.0.0-alpha.2 */}
+      {/* v1.0.5 */}
       <div className="content-header">
-        <h3>1.0.0-alpha.2</h3>
-        <h4><i>Selection system and IDE integration</i></h4>
+        <h3>1.0.5</h3>
+        <h4><i>Automatic project configuration</i></h4>
         <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
-            <li>Alt+Click Activation: Non-intrusive inspector activation</li>
-            <li>Persistent Selection: Solid outlines that persist</li>
-            <li>Cursor Deep Links: Direct navigation to source code</li>
-            <li>Smart Event Handling: Prevents interference with app behavior</li>
-            <li>Visual Hover Feedback: Dashed outlines and preview chips</li>
+            <li><strong>Auto-Update:</strong> Extension now automatically updates index.html with backend URL on login</li>
+            <li><strong>Activation Fix:</strong> Extension updates index.html on activation if user is already logged in</li>
+            <li><strong>Error Handling:</strong> Improved error logging for JWKS fetch failures and token verification</li>
+            <li><strong>Robust Updates:</strong> Better index.html update logic that handles existing configurations</li>
           </ul>
         </div>
       </div>
 
-      {/* v1.0.0-alpha.1 */}
+      {/* v1.0.4 */}
       <div className="content-header">
-        <h3>1.0.0-alpha.1</h3>
-        <h4><i>Initial alpha release with basic inspection</i></h4>
+        <h3>1.0.4</h3>
+        <h4><i>Production authentication fixes</i></h4>
         <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
-            <li>Basic Element Inspection: Hover and click detection</li>
-            <li>Source Code Navigation: Deep links to Cursor IDE</li>
-            <li>Babel Plugin Integration: Automatic data-source injection</li>
-            <li>Development-Only Mode: Automatic exclusion from production builds</li>
-            <li>Modular Architecture: Clean separation of concerns</li>
+            <li><strong>JWKS Endpoint:</strong> JWKS endpoint now uses production backend URL in production mode</li>
+            <li><strong>Backend URL Injection:</strong> Added window.__SITU_BACKEND_URL injection into index.html</li>
+            <li><strong>Verification:</strong> Inspector authentication verification now works correctly with production backend</li>
+            <li><strong>Error Logging:</strong> Improved error logging for attestation token creation and JWKS verification</li>
           </ul>
         </div>
       </div>
 
-      {/* v0.1.0 */}
+      {/* v1.0.3 */}
       <div className="content-header">
-        <h3>0.1.0</h3>
-        <h4>Project foundation</h4>
+        <h3>1.0.3</h3>
+        <h4><i>Production attestation fixes</i></h4>
         <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
           <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
-            <li>Project initialization and structure</li>
-            <li>Vite and React development setup</li>
-            <li>Core infrastructure and tooling</li>
+            <li><strong>Attestation Token:</strong> Attestation token creation now uses production backend URL in production mode</li>
+            <li><strong>Marketplace Fix:</strong> Fixed issue where attestation file was not created after login in marketplace version</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* v1.0.2 */}
+      <div className="content-header">
+        <h3>1.0.2</h3>
+        <h4><i>Marketplace preparation</i></h4>
+        <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
+          <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
+            <li><strong>Extension Icon:</strong> Added extension icon for marketplace listing</li>
+            <li><strong>WebSocket Support:</strong> Added WebSocket dependency (ws) for MCP server communication</li>
+            <li><strong>Marketplace Categories:</strong> Updated categories (Visualization, Debuggers) for better discoverability</li>
+            <li><strong>Keywords:</strong> Enhanced keywords for better search results</li>
+            <li><strong>Documentation:</strong> Updated README to reflect free open beta status</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* v1.0.1 */}
+      <div className="content-header">
+        <h3>1.0.1</h3>
+        <h4><i>Production backend migration</i></h4>
+        <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
+          <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
+            <li><strong>Backend URL:</strong> Updated authentication backend URL to production Cloud Run endpoint</li>
+            <li><strong>Environment Detection:</strong> Extension now uses production API in production mode, localhost for development</li>
+          </ul>
+        </div>
+      </div>
+
+      {/* v1.0.0 */}
+      <div className="content-header">
+        <h3>1.0.0</h3>
+        <h4><i>Initial release with core inspection and editing capabilities</i></h4>
+        <div style={{ color: '#a3a3a3', lineHeight: '2', marginTop: '0px' }}>
+          <ul style={{ margin: 0, paddingLeft: '1.25rem' }}>
+            <li><strong>Element Selection:</strong> Alt+Click to select and inspect React elements</li>
+            <li><strong>Visual Inspection:</strong> Hover outlines and preview chips showing element boundaries and dimensions</li>
+            <li><strong>Layout Detection:</strong> Automatic gap and padding detection with visual indicators</li>
+            <li><strong>Interactive Editing:</strong> Drag to resize gaps, click to input precise values</li>
+            <li><strong>Distance Measurements:</strong> Figma-style measurements between elements</li>
+            <li><strong>Color Editor:</strong> Built-in color picker with gradient support and HSV controls</li>
+            <li><strong>Styles Sidebar:</strong> Real-time style editing and preview with comprehensive property controls</li>
+            <li><strong>Source Navigation:</strong> Jump to element source code in VS Code with deep links</li>
+            <li><strong>Account System:</strong> Account-based authentication and plan validation</li>
+            <li><strong>Auto-Setup:</strong> Automatic project setup for Vite, Webpack, and Create React App projects</li>
+            <li><strong>Command Palette:</strong> Full command palette integration for all inspector features</li>
+            <li><strong>Secure Storage:</strong> Credential storage using VS Code's secret storage API</li>
           </ul>
         </div>
       </div>
 
       <TipSection title="Versioning">
-        We follow <a href="https://semver.org/" style={{ color: '#3b82f6' }}>Semantic Versioning</a> for all releases. Alpha releases are early development, Beta releases are feature-complete, and Stable releases are production-ready.
+        We follow <a href="https://semver.org/" style={{ color: '#3b82f6' }}>Semantic Versioning</a> for all releases. Patch versions (1.0.x) include bug fixes and minor improvements, minor versions (1.x.0) add new features, and major versions (x.0.0) include breaking changes.
       </TipSection>
 
       <div className="content-header">
