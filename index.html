@@ -70,29 +70,20 @@
         });
       })();
     </script>
-  
-    
-    
-    
-    
-    
-    
-    
     <script>
       (function(){
         try {
-          // Load attestation token from local extension server
-          fetch('http://127.0.0.1:7127/situ-attestation.js', { cache: 'no-store' })
-            .then(r => r.ok ? r.text() : null)
-            .then(code => { if (code) eval(code); })
-            .catch(() => {});
+          // Demo mode: Skip attestation token fetch (no local extension server in demo)
+          // The bundle will set window.__SITU_DEMO_MODE=true, but set it here too for early access
+          window.__SITU_DEMO_MODE = true;
         } catch(_) {}
       })();
     </script>
     <script>
       (function(){
         try {
-          window.__SITU_ENFORCE_JWT = true;
+          // Demo mode: Disable JWT enforcement and set backend URL
+          window.__SITU_ENFORCE_JWT = false;
           window.__SITU_BACKEND_URL = 'https://situ-design-backend-734636647525.us-central1.run.app';
         } catch(_) {}
       })();
