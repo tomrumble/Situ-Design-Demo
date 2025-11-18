@@ -71,11 +71,29 @@
       })();
     </script>
   
+    
+    
+    
+    
+    
+    
+    
+    <script>
+      (function(){
+        try {
+          // Load attestation token from local extension server
+          fetch('http://127.0.0.1:7127/situ-attestation.js', { cache: 'no-store' })
+            .then(r => r.ok ? r.text() : null)
+            .then(code => { if (code) eval(code); })
+            .catch(() => {});
+        } catch(_) {}
+      })();
+    </script>
     <script>
       (function(){
         try {
           window.__SITU_ENFORCE_JWT = true;
-          window.__SITU_BACKEND_URL = 'https://situ-design-backend-qt3kmin7pq-uc.a.run.app';
+          window.__SITU_BACKEND_URL = 'https://situ-design-backend-734636647525.us-central1.run.app';
         } catch(_) {}
       })();
     </script>
